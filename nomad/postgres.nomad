@@ -1,6 +1,6 @@
 job "care-postgres" {
   datacenters = ["dc1"]
-  type        = "service"
+  type = "service"
 
   group "postgres" {
     count = 1
@@ -29,6 +29,8 @@ job "care-postgres" {
         cpu    = 500
         memory = 1024
       }
+
+
     }
   }
 }

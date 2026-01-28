@@ -1,6 +1,6 @@
 job "care-redis" {
   datacenters = ["dc1"]
-  type        = "service"
+  type = "service"
 
   group "redis" {
     count = 1
@@ -23,6 +23,8 @@ job "care-redis" {
         cpu    = 200
         memory = 256
       }
+
+
     }
   }
 }

@@ -1,16 +1,5 @@
 .PHONY: logs reset-and-setup
 
-
-DOCKER_VERSION := $(shell docker --version 2>/dev/null)
-
-docker_config_file := 'docker-compose.local.yaml'
-
-all:
-ifndef DOCKER_VERSION
-    $(error "command docker is not available, please install Docker")
-endif
-
-
 nomad-up:
 	@./scripts/nomad-up.sh
 
