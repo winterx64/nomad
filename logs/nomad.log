@@ -1,0 +1,140 @@
+==> WARNING: mTLS is not configured - Nomad is not secure without mTLS!
+==> WARNING: Bootstrap mode enabled! Potentially unsafe operation.
+==> Loaded configuration from /etc/nomad.d/nomad.hcl
+==> Starting Nomad agent...
+==> Nomad agent configuration:
+
+       Advertise Addrs: HTTP: 192.168.1.37:4646; RPC: 192.168.1.37:4647; Serf: 192.168.1.37:4648
+            Bind Addrs: HTTP: [0.0.0.0:4646]; RPC: 0.0.0.0:4647; Serf: 0.0.0.0:4648
+                Client: true
+             Log Level: INFO
+               Node Id: a40b97b9-b684-e814-55aa-a618e456d1c6
+                Region: global (DC: dc1)
+                Server: true
+               Version: 1.11.1
+
+==> Nomad agent started! Log data will stream in below:
+
+    2026-02-03T21:20:28.966+0530 [INFO]  nomad: setting up raft bolt store: no_freelist_sync=false
+    2026-02-03T21:20:28.978+0530 [INFO]  nomad.raft: initial configuration: index=1 servers="[{Suffrage:Voter ID:89295c2a-ab53-b338-8e35-838d951a0c79 Address:192.168.1.37:4647}]"
+    2026-02-03T21:20:28.978+0530 [INFO]  nomad.raft: entering follower state: follower="Node at 192.168.1.37:4647 [Follower]" leader-address= leader-id=
+    2026-02-03T21:20:28.981+0530 [INFO]  nomad: serf: EventMemberJoin: main.global 192.168.1.37
+    2026-02-03T21:20:28.981+0530 [INFO]  nomad: starting scheduling worker(s): num_workers=4 schedulers=["service", "batch", "system", "sysbatch", "_core"]
+    2026-02-03T21:20:28.982+0530 [INFO]  nomad: started scheduling worker(s): num_workers=4 schedulers=["service", "batch", "system", "sysbatch", "_core"]
+    2026-02-03T21:20:28.982+0530 [WARN]  nomad: serf: Failed to re-join any previously known node
+    2026-02-03T21:20:28.982+0530 [INFO]  nomad: adding server: name=main.global addr=192.168.1.37:4647 dc=dc1
+    2026-02-03T21:20:28.983+0530 [WARN]  agent.plugin_loader: skipping external plugins since plugin_dir doesn't exist: plugin_dir=/opt/nomad/data/plugins
+    2026-02-03T21:20:28.994+0530 [INFO]  agent: detected plugin: name=raw_exec type=driver plugin_version=0.1.0
+    2026-02-03T21:20:28.994+0530 [INFO]  agent: detected plugin: name=exec type=driver plugin_version=0.1.0
+    2026-02-03T21:20:28.994+0530 [INFO]  agent: detected plugin: name=qemu type=driver plugin_version=0.1.0
+    2026-02-03T21:20:28.994+0530 [INFO]  agent: detected plugin: name=java type=driver plugin_version=0.1.0
+    2026-02-03T21:20:28.994+0530 [INFO]  agent: detected plugin: name=docker type=driver plugin_version=0.1.0
+    2026-02-03T21:20:28.995+0530 [INFO]  client: using state directory: state_dir=/opt/nomad/data/client
+    2026-02-03T21:20:28.996+0530 [INFO]  client: using alloc directory: alloc_dir=/opt/nomad/data/alloc
+    2026-02-03T21:20:28.996+0530 [INFO]  client: using dynamic ports: min=20000 max=32000 reserved=""
+    2026-02-03T21:20:29.028+0530 [WARN]  client.fingerprint_mgr.network: unable to parse speed: path=/usr/sbin/ethtool device=wlo1
+    2026-02-03T21:20:29.030+0530 [WARN]  client.fingerprint_mgr.network: unable to parse speed: path=/usr/sbin/ethtool device=lo
+    2026-02-03T21:20:29.036+0530 [WARN]  client.fingerprint_mgr.network: unable to parse speed: path=/usr/sbin/ethtool device=eno1
+    2026-02-03T21:20:29.038+0530 [WARN]  client.fingerprint_mgr.network: unable to parse speed: path=/usr/sbin/ethtool device=wlo1
+    2026-02-03T21:20:29.045+0530 [WARN]  client.fingerprint_mgr.network: unable to parse speed: path=/usr/sbin/ethtool device=docker0
+    2026-02-03T21:20:30.325+0530 [WARN]  nomad.raft: heartbeat timeout reached, starting election: last-leader-addr= last-leader-id=
+    2026-02-03T21:20:30.325+0530 [INFO]  nomad.raft: entering candidate state: node="Node at 192.168.1.37:4647 [Candidate]" term=3
+    2026-02-03T21:20:30.325+0530 [INFO]  nomad.raft: pre-vote successful, starting election: term=3 tally=1 refused=0 votesNeeded=1
+    2026-02-03T21:20:30.333+0530 [INFO]  nomad.raft: election won: term=3 tally=1
+    2026-02-03T21:20:30.333+0530 [INFO]  nomad.raft: entering leader state: leader="Node at 192.168.1.37:4647 [Leader]"
+    2026-02-03T21:20:30.333+0530 [INFO]  nomad: cluster leadership acquired
+    2026-02-03T21:20:30.372+0530 [INFO]  nomad: eval broker status modified: paused=false
+    2026-02-03T21:20:30.372+0530 [INFO]  nomad: blocked evals status modified: paused=false
+    2026-02-03T21:20:37.329+0530 [INFO]  client.proclib.cg2: initializing nomad cgroups: cores=0-3
+    2026-02-03T21:20:37.329+0530 [INFO]  client.plugin: starting plugin manager: plugin-type=csi
+    2026-02-03T21:20:37.329+0530 [INFO]  client.plugin: starting plugin manager: plugin-type=driver
+    2026-02-03T21:20:37.330+0530 [INFO]  client.plugin: starting plugin manager: plugin-type=device
+    2026-02-03T21:20:37.330+0530 [INFO]  client.plugin: starting plugin manager: plugin-type=dynamic_host_volume
+    2026-02-03T21:20:37.414+0530 [INFO]  client: setting node identity token
+    2026-02-03T21:20:37.414+0530 [INFO]  client: setting node identity token
+    2026-02-03T21:20:37.424+0530 [INFO]  client: node registration complete
+    2026-02-03T21:20:37.436+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=441f6203-3bf8-288d-eddc-7ab07a5dcf99 task=redis type=Received msg="Task received by client" failed=false
+    2026-02-03T21:20:37.461+0530 [WARN]  client.driver_mgr.docker: failed to reattach to docker logger process: driver=docker error="failed to reattach to docker logger process: reattachment process not found"
+    2026-02-03T21:20:37.520+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=6b29c965-dc50-d55f-6771-3645bd31b288 task=api type=Received msg="Task received by client" failed=false
+    2026-02-03T21:20:37.520+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=6b29c965-dc50-d55f-6771-3645bd31b288 task=connect-proxy-care-backend type=Received msg="Task received by client" failed=false
+    2026-02-03T21:20:37.553+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=b1af95a9-0135-d130-49ac-3b761ccbbdc9 task=postgres type=Received msg="Task received by client" failed=false
+    2026-02-03T21:20:37.554+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=b1af95a9-0135-d130-49ac-3b761ccbbdc9 task=connect-proxy-care-postgres type=Received msg="Task received by client" failed=false
+    2026-02-03T21:20:37.566+0530 [WARN]  client.driver_mgr.docker: failed to reattach to docker logger process: driver=docker error="failed to reattach to docker logger process: reattachment process not found"
+    2026-02-03T21:20:37.637+0530 [WARN]  client.driver_mgr.docker: failed to reattach to docker logger process: driver=docker error="failed to reattach to docker logger process: reattachment process not found"
+    2026-02-03T21:20:37.684+0530 [INFO]  client: started client: node_id=b5c9a2b5-c9e0-21fc-99fb-3965cbccabf8
+    2026-02-03T21:20:37.688+0530 [INFO]  client.gc: marking allocation for GC: alloc_id=6b29c965-dc50-d55f-6771-3645bd31b288
+    2026-02-03T21:20:38.036+0530 [WARN]  client.alloc_runner.task_runner.task_hook: failed to reattach to logmon process: alloc_id=b1af95a9-0135-d130-49ac-3b761ccbbdc9 task=connect-proxy-care-postgres error="reattachment process not found"
+    2026-02-03T21:20:38.036+0530 [WARN]  client.alloc_runner.task_runner.task_hook: failed to reattach to logmon process: alloc_id=b1af95a9-0135-d130-49ac-3b761ccbbdc9 task=postgres error="reattachment process not found"
+    2026-02-03T21:20:38.131+0530 [INFO]  client.alloc_runner.task_runner.task_hook.envoy_bootstrap: bootstrapping envoy: alloc_id=b1af95a9-0135-d130-49ac-3b761ccbbdc9 task=connect-proxy-care-postgres namespace="" proxy_id=_nomad-task-b1af95a9-0135-d130-49ac-3b761ccbbdc9-group-postgres-care-postgres-5432-sidecar-proxy service=care-postgres gateway="" bootstrap_file=/opt/nomad/data/alloc/b1af95a9-0135-d130-49ac-3b761ccbbdc9/connect-proxy-care-postgres/secrets/envoy_bootstrap.json grpc_addr=unix://alloc/tmp/consul_grpc.sock admin_bind=127.0.0.2:19001 ready_bind=127.0.0.1:19101
+    2026-02-03T21:20:38.203+0530 [WARN]  client.alloc_runner.task_runner.task_hook: failed to reattach to logmon process: alloc_id=441f6203-3bf8-288d-eddc-7ab07a5dcf99 task=redis error="reattachment process not found"
+    2026-02-03T21:20:43.680+0530 [INFO]  client: node registration complete
+==> Failed to check for updates: Get "https://checkpoint-api.hashicorp.com/v1/check/nomad?arch=amd64&os=linux&signature=af185bb4-12da-e8f7-2567-8e3842344899&version=1.11.1": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+    2026-02-03T21:21:15.045+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=b1af95a9-0135-d130-49ac-3b761ccbbdc9 task=postgres type=Killing msg="Sent interrupt. Waiting 5s before force killing" failed=false
+    2026-02-03T21:21:15.047+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=d186585c-4cad-a85f-29fe-15e3f8abd9e2 task=postgres type=Received msg="Task received by client" failed=false
+    2026-02-03T21:21:15.060+0530 [INFO]  client.alloc_migrator: waiting for previous alloc to terminate: alloc_id=d186585c-4cad-a85f-29fe-15e3f8abd9e2 previous_alloc=b1af95a9-0135-d130-49ac-3b761ccbbdc9
+    2026-02-03T21:21:15.498+0530 [INFO]  client.driver_mgr.docker: stopped container: container_id=a9713e4d46768df16647233bf294b43ba02bfa16e4eedcaaf1292e1834f59239 driver=docker
+    2026-02-03T21:21:15.502+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=b1af95a9-0135-d130-49ac-3b761ccbbdc9 task=postgres type=Terminated msg="Exit Code: 0" failed=false
+    2026-02-03T21:21:15.511+0530 [INFO]  client.driver_mgr.docker.docker_logger: plugin process exited: driver=docker plugin=/usr/bin/nomad id=35052
+    2026-02-03T21:21:15.890+0530 [WARN]  client.driver_mgr.docker: RemoveImage on non-referenced counted image id: driver=docker image_id=sha256:4327b9fd295502f326f44153a1045a7170ddbfffed1c3829798328556cfd09e2
+    2026-02-03T21:21:15.891+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=b1af95a9-0135-d130-49ac-3b761ccbbdc9 task=postgres type=Killed msg="Task successfully killed" failed=false
+    2026-02-03T21:21:15.898+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=b1af95a9-0135-d130-49ac-3b761ccbbdc9 task=connect-proxy-care-postgres type="Main Tasks Dead" msg="Main tasks in the group died" failed=false
+    2026-02-03T21:21:15.907+0530 [INFO]  client.alloc_runner.task_runner.task_hook.logmon: plugin process exited: alloc_id=b1af95a9-0135-d130-49ac-3b761ccbbdc9 task=postgres plugin=/usr/bin/nomad id=35141
+    2026-02-03T21:21:15.913+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=b1af95a9-0135-d130-49ac-3b761ccbbdc9 task=connect-proxy-care-postgres type=Killing msg="Sent interrupt. Waiting 5s before force killing" failed=false
+    2026-02-03T21:21:15.916+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=b1af95a9-0135-d130-49ac-3b761ccbbdc9 task=connect-proxy-care-postgres type="Waiting for shutdown delay" msg="Waiting for shutdown_delay of 5s before killing the task." failed=false
+    2026-02-03T21:21:15.920+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=b1af95a9-0135-d130-49ac-3b761ccbbdc9 task=connect-proxy-care-postgres type=Killing msg="Sent interrupt. Waiting 5s before force killing" failed=false
+    2026-02-03T21:21:21.176+0530 [INFO]  client.driver_mgr.docker: stopped container: container_id=191d09bf6e187e9077293bfc3f4a0dd4e1be83e8892b3e579f72ea43860a40a4 driver=docker
+    2026-02-03T21:21:21.180+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=b1af95a9-0135-d130-49ac-3b761ccbbdc9 task=connect-proxy-care-postgres type=Terminated msg="Exit Code: 0" failed=false
+    2026-02-03T21:21:21.187+0530 [INFO]  client.driver_mgr.docker.docker_logger: plugin process exited: driver=docker plugin=/usr/bin/nomad id=35068
+    2026-02-03T21:21:21.298+0530 [WARN]  client.driver_mgr.docker: RemoveImage on non-referenced counted image id: driver=docker image_id=sha256:eeddec728b56c770eb744072408949a54bc567d6bee1b1417b46a8627282240f
+    2026-02-03T21:21:21.298+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=b1af95a9-0135-d130-49ac-3b761ccbbdc9 task=connect-proxy-care-postgres type=Killed msg="Task successfully killed" failed=false
+    2026-02-03T21:21:21.320+0530 [INFO]  client.alloc_runner.task_runner.task_hook.logmon: plugin process exited: alloc_id=b1af95a9-0135-d130-49ac-3b761ccbbdc9 task=connect-proxy-care-postgres plugin=/usr/bin/nomad id=35140
+    2026-02-03T21:21:21.324+0530 [INFO]  client.alloc_runner: waiting for task to exit: alloc_id=b1af95a9-0135-d130-49ac-3b761ccbbdc9 task=connect-proxy-care-postgres
+    2026-02-03T21:21:21.324+0530 [INFO]  client.gc: marking allocation for GC: alloc_id=b1af95a9-0135-d130-49ac-3b761ccbbdc9
+    2026-02-03T21:21:21.324+0530 [INFO]  client.alloc_migrator: waiting for previous alloc to terminate: alloc_id=d186585c-4cad-a85f-29fe-15e3f8abd9e2 previous_alloc=b1af95a9-0135-d130-49ac-3b761ccbbdc9
+    2026-02-03T21:21:22.611+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=d186585c-4cad-a85f-29fe-15e3f8abd9e2 task=postgres type="Task Setup" msg="Building Task Directory" failed=false
+    2026-02-03T21:21:23.108+0530 [INFO]  client.driver_mgr.docker: created container: driver=docker container_id=bfee3d5898839a143eaf8254068878c170e44c83404240876f80ff8a3f3fba84
+    2026-02-03T21:21:23.261+0530 [INFO]  client.driver_mgr.docker: started container: driver=docker container_id=bfee3d5898839a143eaf8254068878c170e44c83404240876f80ff8a3f3fba84
+    2026-02-03T21:21:23.336+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=d186585c-4cad-a85f-29fe-15e3f8abd9e2 task=postgres type=Started msg="Task started by client" failed=false
+    2026-02-03T21:21:52.578+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=441f6203-3bf8-288d-eddc-7ab07a5dcf99 task=redis type=Killing msg="Sent interrupt. Waiting 5s before force killing" failed=false
+    2026-02-03T21:21:52.578+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=64ebc2fd-bdc6-a2dd-11b6-67261153a7d5 task=redis type=Received msg="Task received by client" failed=false
+    2026-02-03T21:21:52.592+0530 [INFO]  client.alloc_migrator: waiting for previous alloc to terminate: alloc_id=64ebc2fd-bdc6-a2dd-11b6-67261153a7d5 previous_alloc=441f6203-3bf8-288d-eddc-7ab07a5dcf99
+    2026-02-03T21:21:52.983+0530 [INFO]  client.driver_mgr.docker: stopped container: container_id=45c8d58c52242129fe51f87dbe35abc67da96332bbc598267665dd1ed4881e7c driver=docker
+    2026-02-03T21:21:53.017+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=441f6203-3bf8-288d-eddc-7ab07a5dcf99 task=redis type=Terminated msg="Exit Code: 0" failed=false
+    2026-02-03T21:21:53.045+0530 [INFO]  client.driver_mgr.docker.docker_logger: plugin process exited: driver=docker plugin=/usr/bin/nomad id=35022
+    2026-02-03T21:21:53.235+0530 [WARN]  client.driver_mgr.docker: RemoveImage on non-referenced counted image id: driver=docker image_id=sha256:6cbef353e480a8a6e7f10ec545f13d7d3fa85a212cdcc5ffaf5a1c818b9d3798
+    2026-02-03T21:21:53.235+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=441f6203-3bf8-288d-eddc-7ab07a5dcf99 task=redis type=Killed msg="Task successfully killed" failed=false
+    2026-02-03T21:21:53.269+0530 [INFO]  client.alloc_runner.task_runner.task_hook.logmon: plugin process exited: alloc_id=441f6203-3bf8-288d-eddc-7ab07a5dcf99 task=redis plugin=/usr/bin/nomad id=35230
+    2026-02-03T21:21:53.272+0530 [INFO]  client.gc: marking allocation for GC: alloc_id=441f6203-3bf8-288d-eddc-7ab07a5dcf99
+    2026-02-03T21:21:53.272+0530 [INFO]  client.alloc_migrator: waiting for previous alloc to terminate: alloc_id=64ebc2fd-bdc6-a2dd-11b6-67261153a7d5 previous_alloc=441f6203-3bf8-288d-eddc-7ab07a5dcf99
+    2026-02-03T21:21:54.334+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=64ebc2fd-bdc6-a2dd-11b6-67261153a7d5 task=redis type="Task Setup" msg="Building Task Directory" failed=false
+    2026-02-03T21:21:54.898+0530 [INFO]  client.driver_mgr.docker: created container: driver=docker container_id=48f3ab03e60e84dc0a988a382e94882af43b06fd4d4a6dadaf98a65aada2070d
+    2026-02-03T21:21:55.114+0530 [INFO]  client.driver_mgr.docker: started container: driver=docker container_id=48f3ab03e60e84dc0a988a382e94882af43b06fd4d4a6dadaf98a65aada2070d
+    2026-02-03T21:21:55.221+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=64ebc2fd-bdc6-a2dd-11b6-67261153a7d5 task=redis type=Started msg="Task started by client" failed=false
+    2026-02-03T21:24:16.425+0530 [INFO]  client.gc: garbage collecting allocation: alloc_id=6b29c965-dc50-d55f-6771-3645bd31b288 reason="forced collection"
+    2026-02-03T21:24:22.122+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=3483b33b-8597-cd72-f551-02db85a0a158 task=api type=Received msg="Task received by client" failed=false
+    2026-02-03T21:24:23.049+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=3483b33b-8597-cd72-f551-02db85a0a158 task=api type="Task Setup" msg="Building Task Directory" failed=false
+    2026-02-03T21:24:23.173+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=3483b33b-8597-cd72-f551-02db85a0a158 task=api type=Driver msg="Downloading image" failed=false
+    2026-02-03T21:25:35.301+0530 [INFO]  client.driver_mgr.docker: created container: driver=docker container_id=a3ee5362136c794279672788df3d5cd74bfd94d05f1fbed33fb762127c623a03
+    2026-02-03T21:25:35.548+0530 [INFO]  client.driver_mgr.docker: started container: driver=docker container_id=a3ee5362136c794279672788df3d5cd74bfd94d05f1fbed33fb762127c623a03
+    2026-02-03T21:25:36.208+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=3483b33b-8597-cd72-f551-02db85a0a158 task=api type=Started msg="Task started by client" failed=false
+    2026-02-03T21:31:49.471+0530 [INFO]  client.gc: marking allocation for GC: alloc_id=3483b33b-8597-cd72-f551-02db85a0a158
+    2026-02-03T21:31:49.473+0530 [INFO]  client.gc: garbage collecting allocation: alloc_id=3483b33b-8597-cd72-f551-02db85a0a158 reason="forced collection"
+    2026-02-03T21:31:49.480+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=3483b33b-8597-cd72-f551-02db85a0a158 task=api type=Killing msg="Sent interrupt. Waiting 5s before force killing" failed=false
+    2026-02-03T21:31:50.576+0530 [INFO]  client.gc: marking allocation for GC: alloc_id=64ebc2fd-bdc6-a2dd-11b6-67261153a7d5
+    2026-02-03T21:31:50.576+0530 [INFO]  client.gc: garbage collecting allocation: alloc_id=441f6203-3bf8-288d-eddc-7ab07a5dcf99 reason="forced collection"
+    2026-02-03T21:31:50.576+0530 [INFO]  client.gc: garbage collecting allocation: alloc_id=64ebc2fd-bdc6-a2dd-11b6-67261153a7d5 reason="forced collection"
+    2026-02-03T21:31:50.603+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=64ebc2fd-bdc6-a2dd-11b6-67261153a7d5 task=redis type=Killing msg="Sent interrupt. Waiting 5s before force killing" failed=false
+    2026-02-03T21:31:51.009+0530 [INFO]  client.driver_mgr.docker: stopped container: container_id=48f3ab03e60e84dc0a988a382e94882af43b06fd4d4a6dadaf98a65aada2070d driver=docker
+    2026-02-03T21:31:51.014+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=64ebc2fd-bdc6-a2dd-11b6-67261153a7d5 task=redis type=Terminated msg="Exit Code: 0" failed=false
+    2026-02-03T21:31:51.061+0530 [INFO]  client.driver_mgr.docker.docker_logger: plugin process exited: driver=docker plugin=/usr/bin/nomad id=36892
+    2026-02-03T21:31:51.303+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=64ebc2fd-bdc6-a2dd-11b6-67261153a7d5 task=redis type=Killed msg="Task successfully killed" failed=false
+    2026-02-03T21:31:51.350+0530 [INFO]  client.alloc_runner.task_runner.task_hook.logmon: plugin process exited: alloc_id=64ebc2fd-bdc6-a2dd-11b6-67261153a7d5 task=redis plugin=/usr/bin/nomad id=36816
+    2026-02-03T21:31:51.732+0530 [INFO]  client.gc: marking allocation for GC: alloc_id=d186585c-4cad-a85f-29fe-15e3f8abd9e2
+    2026-02-03T21:31:51.734+0530 [INFO]  client.gc: garbage collecting allocation: alloc_id=b1af95a9-0135-d130-49ac-3b761ccbbdc9 reason="forced collection"
+    2026-02-03T21:31:51.735+0530 [INFO]  client.gc: garbage collecting allocation: alloc_id=d186585c-4cad-a85f-29fe-15e3f8abd9e2 reason="forced collection"
+    2026-02-03T21:31:52.046+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=d186585c-4cad-a85f-29fe-15e3f8abd9e2 task=postgres type=Killing msg="Sent interrupt. Waiting 5s before force killing" failed=false
+    2026-02-03T21:31:52.235+0530 [INFO]  client.driver_mgr.docker: stopped container: container_id=bfee3d5898839a143eaf8254068878c170e44c83404240876f80ff8a3f3fba84 driver=docker
+    2026-02-03T21:31:52.236+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=d186585c-4cad-a85f-29fe-15e3f8abd9e2 task=postgres type=Terminated msg="Exit Code: 0" failed=false
+    2026-02-03T21:31:52.269+0530 [INFO]  client.driver_mgr.docker.docker_logger: plugin process exited: driver=docker plugin=/usr/bin/nomad id=36072
+    2026-02-03T21:31:52.348+0530 [INFO]  client.alloc_runner.task_runner: Task event: alloc_id=d186585c-4cad-a85f-29fe-15e3f8abd9e2 task=postgres type=Killed msg="Task successfully killed" failed=false
+    2026-02-03T21:31:52.384+0530 [INFO]  client.alloc_runner.task_runner.task_hook.logmon: plugin process exited: alloc_id=d186585c-4cad-a85f-29fe-15e3f8abd9e2 task=postgres plugin=/usr/bin/nomad id=36005

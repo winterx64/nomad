@@ -1,22 +1,27 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -uo pipefail
 
-if ! curl -s http://127.0.0.1:4646/v1/agent/self >/dev/null 2>&1; then
-  echo "Nomad is not running"
-  rm -f nomad.pid nomad.log
-  exit 0
-fi
+# Use the local project logs directory
+LOG_DIR="$PWD/logs"
 
-echo "Stopping jobs..."
+echo "=== Stopping Nomad Jobs ==="
+# Attempt to stop jobs gracefully first
+sudo nomad job stop -purge care-backend >/dev/null 2>&1 || true
+sudo nomad job stop -purge care-redis >/dev/null 2>&1 || true
+sudo nomad job stop -purge care-postgres >/dev/null 2>&1 || true
 
-nomad job stop care-backend 2>/dev/null || true
-nomad job stop care-redis 2>/dev/null || true
-nomad job stop care-postgres 2>/dev/null || true
+echo "=== Killing Agents (Nomad & Consul) ==="
+sudo pkill -9 nomad || true
+sudo pkill -9 consul || true
 
-if [ -f nomad.pid ]; then
-  kill "$(cat nomad.pid)" 2>/dev/null || true
-  rm -f nomad.pid nomad.log
-  echo "Nomad agent stopped"
-else
-  echo "No nomad.pid file found"
-fi
+echo "=== Cleaning Up Local State ==="
+# Remove PID and log files from the project folder
+rm -f "$LOG_DIR"/*.pid
+# Optional: remove logs as well, or keep them for history
+# rm -f "$LOG_DIR"/*.log
+
+echo "=== Resetting Network Interfaces ==="
+# Cleanup the bridge interface if it's lingering
+sudo ip link delete nomad >/dev/null 2>&1 || true
+
+echo "✅ infrastructure is down."
