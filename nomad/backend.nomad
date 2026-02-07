@@ -34,6 +34,7 @@ job "care-backend" {
       check {
         name     = "tcp-check"
         type     = "tcp"
+        path     = "/health/"
         interval = "10s"
         timeout  = "2s"
         success_before_passing = 2
