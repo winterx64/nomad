@@ -51,8 +51,8 @@ job "care-backend" {
 
         # Consul services as /etc/hosts entries
         extra_hosts = [
-          "care-postgres.service.consul:192.168.1.41",
-          "care-redis.service.consul:192.168.1.41"
+          "care-postgres.service.consul:10.78.35.98",
+          "care-redis.service.consul:10.78.35.98"
         ]
 
         command = "/bin/sh"
