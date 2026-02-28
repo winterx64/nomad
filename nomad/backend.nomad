@@ -1,44 +1,13 @@
 job "care-backend" {
   datacenters = ["dc1"]
   type        = "service"
-  priority    = 100
-
-  meta {
-    owner = "platform"
-    env   = "production"
-  }
 
   group "backend" {
     count = 1
 
-    restart {
-      attempts = 3
-      interval = "5m"
-      delay    = "25s"
-      mode     = "fail"
-    }
-
     network {
-      mode = "bridge"
       port "http" {
         static = 9000
-        to     = 9000
-      }
-    }
-
-    service {
-      name = "care-backend"
-      port = "http"
-      tags = ["urlprefix-/"]
-
-      check {
-        name     = "tcp-check"
-        type     = "tcp"
-        path     = "/health/"
-        interval = "10s"
-        timeout  = "2s"
-        success_before_passing = 2
-        failures_before_critical = 3
       }
     }
 
@@ -46,53 +15,37 @@ job "care-backend" {
       driver = "docker"
 
       config {
-        image = "ghcr.io/ohcnetwork/care:latest"
-        ports = ["http"]
+        image       = "ghcr.io/ohcnetwork/care:latest"
+        ports       = ["http"]
+        extra_hosts = ["host.docker.internal:host-gateway"]
 
-        # Consul services as /etc/hosts entries
-        extra_hosts = [
-          "care-postgres.service.consul:10.78.35.98",
-          "care-redis.service.consul:10.78.35.98"
-        ]
-
-        command = "/bin/sh"
+        command = "bash"
         args = ["-c", <<EOF
-/app/.venv/bin/python manage.py migrate --noinput
-/app/.venv/bin/python manage.py collectstatic --noinput --clear
-/app/.venv/bin/python -m gunicorn config.wsgi:application \
-  --bind=0.0.0.0:9000 \
-  --workers=4 \
-  --threads=2 \
-  --worker-class=gthread \
-  --timeout=120 \
-  --access-logfile - \
-  --error-logfile -
+python manage.py migrate --noinput
+bash start.sh
 EOF
         ]
       }
 
       env {
-        DJANGO_SETTINGS_MODULE = "config.settings.production"
-        DATABASE_URL = "postgresql://postgres:postgres@care-postgres.service.consul:5432/care"
-        REDIS_URL    = "redis://care-redis.service.consul:6379/0"
+        # Django configuration
+        DJANGO_SETTINGS_MODULE             = "config.settings.deployment"
+        DJANGO_DEBUG                       = "True"
+        DJANGO_SECURE_SSL_REDIRECT         = "False"
+        DJANGO_SECURE_HSTS_PRELOAD         = "False"
+        DJANGO_SECURE_CONTENT_TYPE_NOSNIFF = "False"
 
+        # Database & cache
+        DATABASE_URL      = "postgresql://postgres:postgres@host.docker.internal:5432/care"
+        REDIS_URL         = "redis://host.docker.internal:6379/0"
+        CELERY_BROKER_URL = "redis://host.docker.internal:6379/0"
 
-
-        ALLOWED_HOSTS = "*"
-        DEBUG         = "true"
-        SECRET_KEY    = "insecure-dev-key"
-        SECURE_SSL_REDIRECT          = "false"
-        DJANGO_SECURE_SSL_REDIRECT   = "false"
-        SESSION_COOKIE_SECURE        = "false"
-        CSRF_COOKIE_SECURE           = "false"
-        SECURE_HSTS_SECONDS          = "0"
-        ACCOUNT_DEFAULT_HTTP_PROTOCOL = "http"
-
-
-        # CORS
-        CORS_ALLOW_ALL_ORIGINS = "true"
-        SECURE_HSTS_INCLUDE_SUBDOMAINS = "false"
-        SECURE_HSTS_PRELOAD = "false"
+        # PostgreSQL connection
+        POSTGRES_HOST     = "host.docker.internal"
+        POSTGRES_PORT     = "5432"
+        POSTGRES_USER     = "postgres"
+        POSTGRES_PASSWORD = "postgres"
+        POSTGRES_DB       = "care"
       }
 
       resources {
