@@ -24,7 +24,7 @@ job "care-redis" {
       check {
         type     = "script"
         name     = "redis-ping"
-        task     = "redis"  # Must match the task name below
+        task     = "redis"
         command  = "redis-cli"
         args     = ["ping"]
         interval = "10s"
@@ -38,7 +38,6 @@ job "care-redis" {
 
       config {
         image = "redis:7-alpine"
-        # The port is mapped inside the bridge network
         ports = ["redis"]
       }
 

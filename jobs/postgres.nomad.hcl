@@ -24,7 +24,7 @@ job "care-postgres" {
       check {
         type     = "script"
         name     = "postgres-ready"
-        task     = "postgres"  # Specifies which task runs the script
+        task     = "postgres"
         command  = "pg_isready"
         args     = ["-U", "postgres", "-d", "care"]
         interval = "10s"
@@ -36,7 +36,6 @@ job "care-postgres" {
       driver = "docker"
       config {
         image = "postgres:16-alpine"
-        # Persistence: ensure /opt/postgres/data exists on the host
         volumes = [
           "local/postgres:/var/lib/postgresql/data"
         ]
