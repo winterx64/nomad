@@ -22,7 +22,17 @@ Nomad orchestrates the CARE application and its dependencies in a development en
 make nomad-status
 ```
 
+## consul connect version
+
+```bash
+make nomad-prod-up
+```
+
+```bash
+make nomad-prod-down
+```
+
 ### Accessing the Application
 
-- **Nomad UI**: http://localhost:4646
-- **Backend API**: http://localhost:9000
+- **Nomad UI**: <http://localhost:4646>
+- **Backend API**: <http://localhost:9000>
