@@ -10,3 +10,9 @@ nomad-restart: nomad-down nomad-up
 
 nomad-status:
 	@nomad job status
+
+nomad-prod-up:
+	@./scripts/nomad-prod-up.sh
+
+nomad-prod-down:
+	@./scripts/nomad-prod-down.sh
