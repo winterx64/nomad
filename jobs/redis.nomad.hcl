@@ -8,6 +8,7 @@ job "care-redis" {
     network {
       mode = "bridge"
       port "redis" {
+        static = 6379
         to = 6379
       }
     }

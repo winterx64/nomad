@@ -8,6 +8,7 @@ job "care-postgres" {
     network {
       mode = "bridge"
       port "db" {
+        static = 5432
         to = 5432
       }
     }
