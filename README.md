@@ -1,6 +1,7 @@
 # Nomad Setup Guide
 
 Nomad orchestrates the CARE application and its dependencies in a development environment.
+For full documentation, see the [Nomad Jobs Setup Guide](docs/nomad-jobs-setup.md)
 
 ## Quick Start
 
@@ -33,11 +34,13 @@ make nomad-prod-down
 ```
 
 ## Config
+
 This setup helped me get it running
 
 ### Nomad
 
 path: `/etc/nomad.d/nomad.hcl`
+
 ```hcl
 datacenter = "dc1"
 data_dir   = "/opt/nomad/data"
@@ -72,6 +75,7 @@ consul {
 
 log_level = "INFO"
 ```
+
 ## consul
 
 path: `/etc/consul.d/consul.hcl`
@@ -126,7 +130,6 @@ enable_local_script_checks = true
 # Log level
 log_level = "INFO"
 ```
-
 
 ### Accessing the Application
 
