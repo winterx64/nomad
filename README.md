@@ -1,6 +1,6 @@
 # Nomad Setup Guide
 
-Nomad orchestrates the CARE application stack. PostgreSQL, Redis, and the CARE backend run as Docker containers on a shared `care-net` bridge network, using container hostnames for service discovery.
+Nomad orchestrates the CARE application stack. PostgreSQL, Redis, Celery beat, Celery worker, and the CARE backend run as Docker containers on a shared `care-net` bridge network, using container hostnames for service discovery.
 
 For full documentation, see the [Setup Guide](docs/setup.md).
 
@@ -27,11 +27,15 @@ make nomad-status
 
 ```
         [CARE Backend API]
+               |
+        [Celery Worker]
+               |
+        [Celery Beat]
          /              \
    [PostgreSQL]       [Redis]
 ```
 
-All containers share the `care-net` Docker bridge network. The backend resolves `postgres` and `redis` by hostname.
+All containers share the `care-net` Docker bridge network and resolve `postgres` and `redis` by hostname.
 
 ## Nomad Config
 

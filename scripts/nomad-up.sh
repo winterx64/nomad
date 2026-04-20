@@ -18,4 +18,6 @@ docker network create care-net 2>/dev/null || true
 echo "==> Deploying jobs..."
 nomad job run jobs/postgres.nomad.hcl
 nomad job run jobs/redis.nomad.hcl
+nomad job run jobs/celery-beat.nomad.hcl
+nomad job run jobs/celery-worker.nomad.hcl
 nomad job run jobs/backend.nomad.hcl

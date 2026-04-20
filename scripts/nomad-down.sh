@@ -3,6 +3,8 @@ set -euo pipefail
 
 echo "==> Stopping jobs..."
 nomad job stop -purge care-backend 2>/dev/null || true
+nomad job stop -purge care-celery-worker 2>/dev/null || true
+nomad job stop -purge care-celery-beat 2>/dev/null || true
 nomad job stop -purge care-redis 2>/dev/null || true
 nomad job stop -purge care-postgres 2>/dev/null || true
 

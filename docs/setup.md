@@ -2,15 +2,17 @@
 
 ## Overview
 
-Three Nomad jobs make up the CARE stack:
+Five Nomad jobs make up the CARE stack:
 
-| Job             | File                      | Purpose                        |
-| --------------- | ------------------------- | ------------------------------ |
-| `care-postgres` | `jobs/postgres.nomad.hcl` | PostgreSQL 17 database         |
-| `care-redis`    | `jobs/redis.nomad.hcl`    | Redis 8 cache / message broker |
-| `care-backend`  | `jobs/backend.nomad.hcl`  | Django REST API (Gunicorn)     |
+| Job                   | File                            | Purpose                        |
+| --------------------- | ------------------------------- | ------------------------------ |
+| `care-postgres`       | `jobs/postgres.nomad.hcl`       | PostgreSQL 17 database         |
+| `care-redis`          | `jobs/redis.nomad.hcl`          | Redis 8 cache / message broker |
+| `care-celery-beat`    | `jobs/celery-beat.nomad.hcl`    | Celery periodic task scheduler |
+| `care-celery-worker`  | `jobs/celery-worker.nomad.hcl`  | Celery async task worker       |
+| `care-backend`        | `jobs/backend.nomad.hcl`        | Django REST API (Gunicorn)     |
 
-All containers run on a shared `care-net` Docker bridge network. The backend connects to `postgres:5432` and `redis:6379` by hostname.
+All containers run on a shared `care-net` Docker bridge network. Services connect to `postgres:5432` and `redis:6379` by hostname.
 
 ## Prerequisites
 
@@ -33,6 +35,21 @@ All containers run on a shared `care-net` Docker bridge network. The backend con
 - Port: `6379` (static), hostname `redis`
 - Resources: 100 MHz CPU, 128 MB RAM
 
+### `care-celery-beat`
+
+- Image: `ghcr.io/ohcnetwork/care:latest`
+- No exposed ports
+- Resources: 200 MHz CPU, 256 MB RAM
+- Startup: waits for PostgreSQL and Redis, runs migrations, syncs permissions/roles and valuesets, then starts the Celery beat scheduler
+
+### `care-celery-worker`
+
+- Image: `ghcr.io/ohcnetwork/care:latest`
+- No exposed ports
+- Resources: 500 MHz CPU, 512 MB RAM
+- Startup: waits for PostgreSQL and Redis, collects static files, then starts the Celery worker
+- Concurrency controlled via `CELERY_WORKER_CONCURRENCY` (default: `1`)
+
 ### `care-backend`
 
 - Image: `ghcr.io/ohcnetwork/care:latest`
@@ -53,6 +70,8 @@ Manual teardown:
 
 ```bash
 nomad job stop -purge care-backend
+nomad job stop -purge care-celery-worker
+nomad job stop -purge care-celery-beat
 nomad job stop -purge care-redis
 nomad job stop -purge care-postgres
 pkill -TERM nomad
@@ -98,6 +117,8 @@ nomad alloc logs <alloc-id>
 
 ```bash
 nomad job stop -purge care-backend
+nomad job stop -purge care-celery-worker
+nomad job stop -purge care-celery-beat
 nomad job stop -purge care-redis
 nomad job stop -purge care-postgres
 ```
