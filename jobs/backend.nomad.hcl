@@ -26,12 +26,7 @@ job "care-backend" {
         network_mode = "care-net"
 
         command = "bash"
-        args = ["-c", <<EOF
-./wait_for_db.sh
-python manage.py migrate --noinput
-./start.sh
-EOF
-        ]
+        args    = ["start.sh"]
       }
 
       env {
