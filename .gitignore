@@ -1,16 +1,15 @@
-# Nomad runtime artifacts
+# Runtime artifacts
 nomad.log
 nomad.pid
 nomad-data/
 data/
 alloc/
 secrets/
-
+consul.log
+consul.pid
+consul-data/
 *.log
 *.pid
-
-# Nomad dev agent state
-/tmp/nomad*
 
 # Editor & OS
 .DS_Store

@@ -1,43 +1,39 @@
 # Nomad Setup Guide
 
-Nomad orchestrates the CARE application and its dependencies in a development environment.
-For full documentation, see the [Nomad Jobs Setup Guide](docs/nomad-jobs-setup.md)
+Nomad orchestrates the CARE application stack. PostgreSQL, Redis, and the CARE backend run as Docker containers on a shared `care-net` bridge network, using container hostnames for service discovery.
+
+For full documentation, see the [Setup Guide](docs/setup.md).
+
+## Prerequisites
+
+- Nomad agent configured at `/etc/nomad.d/nomad.hcl`
+- Docker runtime available and accessible to Nomad
 
 ## Quick Start
 
-### Starting the Nomad Cluster
-
 ```bash
-./scripts/nomad-up.sh
+make nomad-up
 ```
 
-### Stopping the Nomad Cluster
-
 ```bash
-./scripts/nomad-down.sh
+make nomad-down
 ```
-
-### Check Status
 
 ```bash
 make nomad-status
 ```
 
-## consul connect version
+## Architecture
 
-```bash
-make nomad-prod-up
+```
+        [CARE Backend API]
+         /              \
+   [PostgreSQL]       [Redis]
 ```
 
-```bash
-make nomad-prod-down
-```
+All containers share the `care-net` Docker bridge network. The backend resolves `postgres` and `redis` by hostname.
 
-## Config
-
-This setup helped me get it running
-
-### Nomad
+## Nomad Config
 
 path: `/etc/nomad.d/nomad.hcl`
 
@@ -53,11 +49,6 @@ server {
 
 client {
   enabled = true
-
-  host_volume "postgres_storage" {
-    path      = "/opt/care/postgres"
-    read_only = false
-  }
 }
 
 plugin "docker" {
@@ -69,69 +60,11 @@ plugin "docker" {
   }
 }
 
-consul {
-  address = "127.0.0.1:8500"
-}
-
 log_level = "INFO"
 ```
 
-## consul
-
-path: `/etc/consul.d/consul.hcl`
-
-```hcl
-# Datacenter name
-datacenter = "dc1"
-
-# Data directory
-data_dir = "/opt/consul"
-
-# Bind to the private IP
-bind_addr = "192.168.1.42"
-advertise_addr = "192.168.1.42"
-
-# Client address (UI and API accessible on all interfaces)
-client_addr = "0.0.0.0"
-
-# Server mode
-server = true
-bootstrap_expect = 1
-
-# Enable UI
-ui_config {
-  enabled = true
-}
-
-# Enable Service Mesh (Consul Connect)
-connect {
-  enabled = true
-}
-
-# Port configuration
-ports {
-  dns      = 8600
-  http     = 8500
-  https    = -1
-  grpc     = 8502
-  serf_lan = 8301
-  serf_wan = 8302
-  server   = 8300
-}
-
-# Performance tuning
-performance {
-  raft_multiplier = 1
-}
-
-# Enable local script checks
-enable_local_script_checks = true
-
-# Log level
-log_level = "INFO"
-```
-
-### Accessing the Application
+## Accessing the Application
 
 - **Nomad UI**: <http://localhost:4646>
 - **Backend API**: <http://localhost:9000>
+- **Health check**: <http://localhost:9000/health/>

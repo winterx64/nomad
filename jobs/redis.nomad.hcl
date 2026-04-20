@@ -6,46 +6,26 @@ job "care-redis" {
     count = 1
 
     network {
-      mode = "bridge"
       port "redis" {
         static = 6379
-        to = 6379
+        to     = 6379
       }
-    }
-
-    service {
-      name = "redis"
-      port = "redis"
-      provider = "consul"
-      connect {
-        sidecar_service {}
-      }
-
-      # Health check ensures the mesh only routes traffic when Redis is ready
-      check {
-        type     = "script"
-        name     = "redis-ping"
-        task     = "redis"
-        command  = "redis-cli"
-        args     = ["ping"]
-        interval = "10s"
-        timeout  = "2s"
-      }
-
     }
 
     task "redis" {
       driver = "docker"
 
       config {
-        image = "redis:7-alpine"
-        ports = ["redis"]
+        image        = "redis:8-alpine"
+        ports        = ["redis"]
+        hostname     = "redis"
+        network_mode = "care-net"
       }
 
       resources {
-              cpu    = 200
-              memory = 128
-            }
+        cpu    = 100
+        memory = 128
+      }
     }
   }
 }

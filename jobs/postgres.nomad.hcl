@@ -6,52 +6,33 @@ job "care-postgres" {
     count = 1
 
     network {
-      mode = "bridge"
       port "db" {
         static = 5432
-        to = 5432
-      }
-    }
-
-    service {
-      name = "postgres"
-      port = "db"
-      provider = "consul"
-
-      connect {
-        sidecar_service {}
-      }
-
-      check {
-        type     = "script"
-        name     = "postgres-ready"
-        task     = "postgres"
-        command  = "pg_isready"
-        args     = ["-U", "postgres", "-d", "care"]
-        interval = "10s"
-        timeout  = "2s"
+        to     = 5432
       }
     }
 
     task "postgres" {
       driver = "docker"
+
       config {
-        image = "postgres:16-alpine"
-        volumes = [
-          "local/postgres:/var/lib/postgresql/data"
-        ]
+        image        = "postgres:17-alpine"
+        ports        = ["db"]
+        hostname     = "postgres"
+        network_mode = "care-net"
+        volumes      = ["local/postgres:/var/lib/postgresql/data"]
       }
+
       env {
         POSTGRES_DB       = "care"
         POSTGRES_USER     = "postgres"
         POSTGRES_PASSWORD = "postgres"
-
-        POSTGRES_HOST_AUTH_METHOD = "trust"
       }
+
       resources {
-              cpu    = 500
-              memory = 512
-            }
+        cpu    = 300
+        memory = 256
+      }
     }
   }
 }
